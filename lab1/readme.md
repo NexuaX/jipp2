@@ -25,10 +25,8 @@ Sprawdza czy podane liczby są skojarzone.
 
 Dodaje dwie macierze 2 na 3, wypisuje wynik
 \
-\
 
-**compile\.sh:**
-
+**compile\.sh:**\
 skrypt do kompilacji, usage po odpaleniu bez parametrów
 \
 \
