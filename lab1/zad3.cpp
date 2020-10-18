@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
     
-    if (argc == 2 && strcmp(argv[1], "--help")) {
+    if (argc == 2 && strcmp(argv[1], "--help") == 0) {
         cout << "Usage: zad3 [body mass (kg)] [height (m)]" << endl;
         cout << "Calculates one's BMI" << endl << endl;
         return 0;
