@@ -24,10 +24,12 @@ Sprawdza czy podane liczby są skojarzone.
  > Usage po wpisaniu polecenia z opcją --help
 
 Dodaje dwie macierze 2 na 3, wypisuje wynik
-\
+
+###
 
 **compile\.sh:**\
 skrypt do kompilacji, usage po odpaleniu bez parametrów
-\
-\
+
+###
+
 **Autor:** Albert Mouhoubi
