@@ -2,3 +2,5 @@
 .vscode
 */*.o
 lab3/muled.txt
+lab4/muled.txt
+lab4/build
