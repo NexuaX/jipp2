@@ -35,11 +35,11 @@ Opis poszczególnych funkcji:
 
 **storeSQLite**: zapisuje dane do bazy
 
-###
+##
 
 **compile.sh:**
 skrypt do kompilacji (CMake, Make), usage po odpaleniu z paramerem --help
 
-###
+##
 
 **Autor:** Albert Mouhoubi
