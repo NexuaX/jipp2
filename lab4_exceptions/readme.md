@@ -5,6 +5,8 @@
 output binary after using compile script
  > Usage po wpisaniu polecenia z parametrem --help
 
+##
+
 Klasa do macierzy 2d wartości typu double.
 
 Opis poszczególnych funkcji:
