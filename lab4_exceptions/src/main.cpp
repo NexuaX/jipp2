@@ -22,22 +22,29 @@ int main(int argc, char const * argv[]) {
     
     // konstruktory liczbowe
     DoubleMatrix dm1(4, 5);
+    DoubleMatrix dm2(5, 4);
 
     // losowanie wartosci
     populateMatrix(dm1);
+    populateMatrix(dm2);
 
     // stala precyzja
     cout << setprecision(6) << fixed;
 
     dm1.print();
+    dm2.print();
+
+    dm1.addMatrices(dm2).print();
+
+    dm1.multiplyMatrices(dm2).print();
 
     dm1.storeSQLite("dm1");
 
     cout << endl;
 
-    DoubleMatrix dm2("dm1", SQLite);
+    DoubleMatrix dm3("dm1", SQLite);
 
-    dm2.print();
+    dm3.print();
 
     return 0;
 }

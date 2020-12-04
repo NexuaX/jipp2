@@ -103,7 +103,7 @@ DoubleMatrix::~DoubleMatrix() {
 
 double DoubleMatrix::setElement(size_t n, size_t m, double val) {
 	try {
-		this->dm[n*this->n+m] = val;
+		this->dm[n*this->m+m] = val;
 	} catch (exception & e) {
 		cerr << "Exception!" << endl;
 		cerr << e.what() << endl;
@@ -113,7 +113,7 @@ double DoubleMatrix::setElement(size_t n, size_t m, double val) {
 
 double DoubleMatrix::getElement(size_t n, size_t m) {
 	try {
-		return this->dm[n*this->n+m];
+		return this->dm[n*this->m+m];
 	} catch (exception & e) {
 		cerr << "Exception!" << endl;
 		cerr << e.what() << endl;
