@@ -78,7 +78,7 @@ DoubleMatrix::DoubleMatrix(std::string fileName, int mode) {
 			this->m = m;
 			for (size_t i = 0; i < n; i++) {
 				for (size_t j = 0; j < m; j++) {
-					file >> this->dm[i*n+j];
+					file >> this->dm[i*m+j];
 				}
 			}
 		}
@@ -100,12 +100,12 @@ DoubleMatrix::~DoubleMatrix() {
 }
 
 double DoubleMatrix::setElement(size_t n, size_t m, double val) {
-	this->dm[n*this->n+m] = val;
+	this->dm[n*this->m+m] = val;
 	return val;
 }
 
 double DoubleMatrix::getElement(size_t n, size_t m) {
-	return this->dm[n*this->n+m];
+	return this->dm[n*this->m+m];
 }
 
 DoubleMatrix DoubleMatrix::addMatrices(DoubleMatrix & dm2) {
@@ -238,7 +238,7 @@ bool DoubleMatrix::storeSQLite(std::string fileName) {
 	for (size_t	i = 0; i < this->n; i++) {
 		builder << "(" << i;
 		for (size_t j = 0; j < this->m; j++) {
-			builder << ", " << this->dm[i*this->n+j];
+			builder << ", " << this->dm[i*this->m+j];
 		}
 		builder << "),";
 	}
@@ -315,7 +315,7 @@ int callbackAndWrite(void *data, int argc, char **argv, char **azColName) {
 	int row = atoi(argv[0]);
 	
 	for (size_t i = 0; i < argc-1; i++) {
-		dm->dm[row*dm->n+i] = atof(argv[i+1]);
+		dm->dm[row*dm->m+i] = atof(argv[i+1]);
 	}
 
 	return 0;

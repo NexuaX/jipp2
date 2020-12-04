@@ -43,7 +43,7 @@ DoubleMatrix::DoubleMatrix(std::string filePath) {
 		this->m = m;
 		for (size_t i = 0; i < n; i++) {
 			for (size_t j = 0; j < m; j++) {
-				file >> this->dm[i*n+j];
+				file >> this->dm[i*m+j];
 			}
 		}
 	}
@@ -60,12 +60,12 @@ DoubleMatrix::~DoubleMatrix() {
 }
 
 double DoubleMatrix::setElement(size_t n, size_t m, double val) {
-	this->dm[n*this->n+m] = val;
+	this->dm[n*this->m+m] = val;
 	return val;
 }
 
 double DoubleMatrix::getElement(size_t n, size_t m) {
-	return this->dm[n*this->n+m];
+	return this->dm[n*this->m+m];
 }
 
 DoubleMatrix DoubleMatrix::addMatrices(DoubleMatrix & dm2) {
