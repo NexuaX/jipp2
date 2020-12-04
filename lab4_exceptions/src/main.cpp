@@ -32,19 +32,23 @@ int main(int argc, char const * argv[]) {
     cout << setprecision(6) << fixed;
 
     dm1.print();
+    cout << endl;
     dm2.print();
+    cout << endl;
 
     dm1.addMatrices(dm2).print();
+    cout << endl;
 
     dm1.multiplyMatrices(dm2).print();
+    cout << endl;
 
     dm1.storeSQLite("dm1");
-
     cout << endl;
 
     DoubleMatrix dm3("dm1", SQLite);
 
     dm3.print();
+    cout << endl;
 
     return 0;
 }

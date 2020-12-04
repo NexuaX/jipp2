@@ -134,7 +134,7 @@ DoubleMatrix DoubleMatrix::addMatrices(DoubleMatrix & dm2) {
 			}
 		}
 		return result;
-	} catch (char * message) {
+	} catch (const char * message) {
 		cerr << "Exception! (addMatrices)" << endl;
 		cerr << message << endl;
 	}
@@ -155,7 +155,7 @@ DoubleMatrix DoubleMatrix::subtractMatrices(DoubleMatrix & dm2) {
 			}
 		}
 		return result;
-	} catch (char * message) {
+	} catch (const char * message) {
 		cerr << "Exception! (subMatrices)" << endl;
 		cerr << message << endl;
 	}
@@ -179,7 +179,7 @@ DoubleMatrix DoubleMatrix::multiplyMatrices(DoubleMatrix & dm2) {
 			} 
 		}
 		return result;
-	} catch (char * message) {
+	} catch (const char * message) {
 		cerr << "Exception! (multiplyMatrices)" << endl;
 		cerr << message << endl;
 	}
