@@ -104,7 +104,7 @@ int getCommand() {
         cout << "Current: " << salary << endl;
         cout << "New: ";
         cin >> salary;
-        if (hrms_system.changeSalary(id, salary) == 1) {
+        if (hrms_system.changeSalary(id, salary) == 0) {
             cout << "Failed." << endl;
         } else {
             cout << "Success" << endl;
