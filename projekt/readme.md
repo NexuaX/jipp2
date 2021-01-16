@@ -39,7 +39,7 @@ Plik z bazą \*.db:
 zbiór wszystkich poleceń:
 > polecenie(liczba_podpoleceń)
 ```
-list(3), add, delete, change(6), load, save, exit, help
+list(3), add, delete, change(6), load, save, exit, danger_zone(4), help
 ```
 
 * list : pozwala wylistować aktualnych pracowników w systemie, pracowników danego departamentu oraz płace (z możliwością sortowania)
@@ -50,6 +50,7 @@ list(3), add, delete, change(6), load, save, exit, help
 * save : zapisuje aktualny stan systemu do bazy (nadpisuje wszystko)
 * exit : wychodzi z systemu i programu
 * help : wyświetla listę poleceń
+* danger_zone : *używaj ostrożnie*, pozwala na zmianę konfiguracji (bazy, loginu, hasła) oraz na usunięcie wszytchich pracowników, wymagane potwierdzenie loginem i hasłem
 
 Polecenia można kolejkować, tak samo jak ich konstrukcję czyli:
 
