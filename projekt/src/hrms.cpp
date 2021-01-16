@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int help(), list(), add(), del(), change(), load(), save(), exit_hrms();
+int help(), list(), add(), del(), change(), load(), save(), danger_zone(), exit_hrms();
 
 vector<Command> HRMS::commands = {
     Command("help", help),
@@ -19,6 +19,7 @@ vector<Command> HRMS::commands = {
     Command("change", change),
     Command("load", load),
     Command("save", save),
+    Command("danger_zone", danger_zone),
     Command("exit", exit_hrms)
 };
 
@@ -95,6 +96,10 @@ int HRMS::init() {
             cout << "Unauthorized conf.cfg changes. Aborted." << endl;
             break;
         }
+
+        this->user.password = password_sha;
+        this->user.username = user_sha;
+
         flag = 0;
     }
 
@@ -111,6 +116,8 @@ int HRMS::init() {
         exit_hrms();
         return 0;
     }
+
+    this->db_name = database_name;
 
     cout << "Logged successfully!" << endl;
 
@@ -194,6 +201,10 @@ Employee HRMS::getEmployee(string id) {
         if (emp.getID() == id) return emp;
     }
     return Employee(id, "dont exist", "-", "-", "-");
+}
+
+User HRMS::getUser() {
+    return this->user;
 }
 
 int HRMS::updateID(string old_id, string new_id) {
@@ -484,6 +495,82 @@ int HRMS::closeConnection() {
     return 1;
 }
 
+int HRMS::updateDatabaseName(string new_name, string user, string password) {
+    ofstream conf_file("conf.cfg");
+    if (!conf_file.good()) {
+        cout << "Errors during opening!" << endl;
+        exit_hrms();
+        return 0;
+    }
+    conf_file << "DATABASE=" << new_name << endl;
+    conf_file << "USER=" << this->user.username << endl;
+    conf_file << "PASSWORD=" << this->user.password << endl;
+    conf_file << "HASH=" << sha256(user + "secret_code" + password) << endl;
+    conf_file.close();
+
+    this->closeConnection();
+
+    int result = sqlite3_open((new_name).c_str(), &db);
+
+    if (result) {
+        cout << "Database open error! " << sqlite3_errmsg(db) << endl;
+        exit_hrms();
+        return 0;
+    }
+
+    this->db_name = new_name;
+
+    cout << "Database opened successfully!" << endl;
+
+    return 1;
+}
+
+int HRMS::updateUsername(string new_user, string user, string password) {
+    ofstream conf_file("conf.cfg");
+    if (!conf_file.good()) {
+        cout << "Errors during opening!" << endl;
+        exit_hrms();
+        return 0;
+    }
+    string new_user_sha = sha256(new_user);
+    conf_file << "DATABASE=" << this->db_name << endl;
+    conf_file << "USER=" << new_user_sha << endl;
+    conf_file << "PASSWORD=" << this->user.password << endl;
+    conf_file << "HASH=" << sha256(new_user + "secret_code" + password) << endl;
+    conf_file.close();
+
+    this->user.username = new_user_sha;
+
+    return 1;
+}
+
+int HRMS::updatePassword(string new_pass, string user, string password) {
+    ofstream conf_file("conf.cfg");
+    if (!conf_file.good()) {
+        cout << "Errors during opening!" << endl;
+        exit_hrms();
+        return 0;
+    }
+    string new_pass_sha = sha256(new_pass);
+    conf_file << "DATABASE=" << this->db_name << endl;
+    conf_file << "USER=" << this->user.username << endl;
+    conf_file << "PASSWORD=" << new_pass_sha << endl;
+    conf_file << "HASH=" << sha256(user + "secret_code" + new_pass) << endl;
+    conf_file.close();
+
+    this->user.password = new_pass_sha;
+
+    return 1;
+}
+
+int HRMS::deleteAllEmployees() {
+    employee_list.clear();
+    department_employee_map.clear();
+    employee_salary.clear();
+
+    return 1;
+}
+
 int help() {
     cout << "Available commands: ";
     for (Command & cmd : HRMS::commands) {
@@ -677,6 +764,102 @@ int save() {
     cout << "Save to database" << endl;
     HRMS::getInstance().saveToDatabase();
     return 1;
+}
+
+int danger_zone() {
+    cout << "CAUTION! These are dangerous functions. Use with care." << endl;
+    cout << "1. Change database name" << endl;
+    cout << "2. Change username" << endl;
+    cout << "3. Change password" << endl;
+    cout << "4. Delete all employees" << endl;
+
+    int choice; 
+    cout << "Choice: ";
+    cin >> choice;
+
+    string change;
+    string user_confirm, pass_confirm;
+    string pass = HRMS::getInstance().getUser().password;
+    string user = HRMS::getInstance().getUser().username;
+    int result;
+
+    switch(choice) {
+        case 1:
+            cout << "Enter new database name: ";
+            cin >> change;
+            cout << "Typed: " << change << endl;
+
+            cout << "Confirm with login and password: ";
+            cin >> user_confirm >> pass_confirm;
+
+            if (pass.compare(sha256(pass_confirm)) != 0 || user.compare(sha256(user_confirm)) != 0) {
+                cout << "Wrong credentials. Aborted." << endl;
+                return 1;
+            }
+            result = HRMS::getInstance().updateDatabaseName(change, user_confirm, pass_confirm);
+            if (result == 0) {
+                cout << "Failed." << endl;
+            }
+            cout << "Success." << endl;
+            cout << "Remember to save data to new database!" << endl;
+            break;
+        case 2:
+            cout << "Enter new username: ";
+            cin >> change;
+            cout << "Typed: " << change << endl;
+
+            cout << "Confirm with current login and password: ";
+            cin >> user_confirm >> pass_confirm;
+
+            if (pass.compare(sha256(pass_confirm)) != 0 || user.compare(sha256(user_confirm)) != 0) {
+                cout << "Wrong credentials. Aborted." << endl;
+                return 1;
+            }
+            result = HRMS::getInstance().updateUsername(change, user_confirm, pass_confirm);
+            if (result == 0) {
+                cout << "Failed." << endl;
+            }
+            cout << "Success." << endl;
+            break;
+        case 3:
+            cout << "Enter new password: ";
+            cin >> change;
+            cout << "Typed: " << change << endl;
+
+            cout << "Confirm with login and current password: ";
+            cin >> user_confirm >> pass_confirm;
+
+            if (pass.compare(sha256(pass_confirm)) != 0 || user.compare(sha256(user_confirm)) != 0) {
+                cout << "Wrong credentials. Aborted." << endl;
+                return 1;
+            }
+            result = HRMS::getInstance().updatePassword(change, user_confirm, pass_confirm);
+            if (result == 0) {
+                cout << "Failed." << endl;
+            }
+            cout << "Success." << endl;
+            break;
+        case 4:
+            cout << "You are about to delete all employees!" << endl;
+            cout << "Confirm with login and password: ";
+            cin >> user_confirm >> pass_confirm;
+
+            if (pass.compare(sha256(pass_confirm)) != 0 || user.compare(sha256(user_confirm)) != 0) {
+                cout << "Wrong credentials. Aborted." << endl;
+                return 1;
+            }
+            result = HRMS::getInstance().deleteAllEmployees();
+            if (result == 0) {
+                cout << "Failed." << endl;
+            }
+            cout << "Success." << endl;
+            break;
+        default:
+            cout << "Unknown choice!" << endl;
+            break;
+    }
+    return 1;
+
 }
 
 int exit_hrms() {

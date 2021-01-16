@@ -20,6 +20,7 @@ private:
     map<string, double> employee_salary;
     sqlite3 * db;
     User user;
+    string db_name;
     HRMS() {};
 public:
     static vector<Command> commands;
@@ -35,6 +36,7 @@ public:
     int addEmployee(Employee emp, string department_id, double salary);
     int delEmployee(string id);
     Employee getEmployee(string id);
+    User getUser();
     int updateID(string old_id, string new_id);
     int updateName(string id, string new_name);
     int updateSurname(string id, string new_surname);
@@ -47,6 +49,11 @@ public:
     void listEmployees();
     int getSalary(string id);
     
+    // Danger Zone
+    int updateDatabaseName(string new_name, string user, string password);
+    int updateUsername(string new_username, string user, string password);
+    int updatePassword(string new_password, string user, string password);
+    int deleteAllEmployees();
 
     // dodatkowe metody sqlite3
     int closeConnection();
