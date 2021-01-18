@@ -39,13 +39,13 @@ Plik z bazą \*.db:
 zbiór wszystkich poleceń:
 > polecenie(liczba_podpoleceń)
 ```
-list(3), add, delete, change(6), load, save, exit, danger_zone(4), help
+list(3), add, delete, change(7), load, save, exit, danger_zone(4), help
 ```
 
 * list : pozwala wylistować aktualnych pracowników w systemie, pracowników danego departamentu oraz płace (z możliwością sortowania)
 * add : polecenie do wprowadzania nowych pracowników do systemu
 * delete : polecenie do usuwania pracowników z systemu
-* change : polecenie pozwala zmienić jedną właściwość pracownika na raz 
+* change : polecenie pozwala zmienić jedną właściwość pracownika na raz, lub wszystkie
 * load : wczytuje dane z bazy
 * save : zapisuje aktualny stan systemu do bazy (nadpisuje wszystko)
 * exit : wychodzi z systemu i programu
