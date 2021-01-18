@@ -675,6 +675,7 @@ int change() {
 
     int choice;
     cout << "What to change?" << endl;
+    cout << "0. All" << endl;
     cout << "1. ID" << endl << "2. name" << endl << "3. surname" << endl;
     cout << "4. Dep_ID" << endl << "5. pos" << endl << "6. salary" << endl;
     cout << "Choice: ";
@@ -687,6 +688,57 @@ int change() {
     int result;
 
     switch(choice) {
+        case 0:
+            cout << "New ID: ";
+            cin >> new_id;
+            cout << "New name: ";
+            cin >> name;
+            cout << "New surname: ";
+            cin >> surname;
+            cout << "New Dep_ID: ";
+            cin >> dep_id;
+            cout << "New pos: ";
+            cin >> pos;
+            cout << "New salary: ";
+            cin >> salary;
+            result = HRMS::getInstance().updateID(id, new_id);
+            if (result == 0) {
+                cout << "Failed." << endl;
+            } else {
+                cout << "Success." << endl;
+                id = new_id;
+            }
+            result = HRMS::getInstance().updateName(id, name);
+            if (result == 0) {
+                cout << "Failed." << endl;
+            } else {
+                cout << "Success." << endl;
+            }
+            result = HRMS::getInstance().updateSurname(id, surname);
+            if (result == 0) {
+                cout << "Failed." << endl;
+            } else {
+                cout << "Success." << endl;
+            }
+            result = HRMS::getInstance().updateDepID(id, dep_id);
+            if (result == 0) {
+                cout << "Failed." << endl;
+            } else {
+                cout << "Success." << endl;
+            }
+            result = HRMS::getInstance().updatePosition(id, pos);
+            if (result == 0) {
+                cout << "Failed." << endl;
+            } else {
+                cout << "Success." << endl;
+            }
+            result = HRMS::getInstance().updateSalary(id, salary);
+            if (result == 0) {
+                cout << "Failed." << endl;
+            } else {
+                cout << "Success." << endl;
+            }
+            break;
         case 1:
             cout << "New ID: ";
             cin >> new_id;
